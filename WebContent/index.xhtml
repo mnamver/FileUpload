@@ -1,0 +1,71 @@
+ <html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+ 
+  <h:head>
+ 
+  <style>
+  .defaultWidth{
+   width:35%;
+  }
+  #container{
+  	margin: 0px auto;
+  }
+  </style>
+  </h:head>
+ 
+  <h:body>
+  
+	  <h:form enctype="multipart/form-data">
+	  
+	    <p:growl id="messages" showDetail="true" />
+	 
+	
+	    <h:panelGrid columns="1">
+	    <h:panelGrid columns="2" styleClass="defaultWidth">
+    			<p:inputText value="#{fileUploadModel1.queryTags}" label="Query tags" placeholder="Search for tags..." style="width:100%"  />
+    			<p:commandButton value="Query" action="#{fileUploadModel1.query}" ajax="false" style="width:100%"     />
+    	</h:panelGrid>	
+    	
+    	
+	    <p:dataTable id="table1" value="#{fileUploadModel1.fileList}" var="file" styleClass="defaultWidth">
+			    <f:facet name="header">
+			        <p:outputLabel value="Files" />
+			    </f:facet>
+			   
+			    <p:column>
+			        <f:facet name="header">
+			            <p:outputLabel value="File Name" />
+			            
+			        </f:facet>
+			      
+			        <p:outputLabel value="#{file.fileName}" />
+			    </p:column>
+			    <p:column>
+			        <f:facet name="header">
+			            <p:outputLabel value="Tag" />
+			        </f:facet>
+			        <p:outputLabel value="#{file.tag}" />
+			    </p:column>
+			   
+			    <f:facet name="footer">
+			        <p:outputLabel value="number of File: #{fileUploadModel1.fileList.size()}" />
+			    </f:facet>
+			</p:dataTable>
+			
+			<p:commandButton value="Add" type="button" onclick="PF('dlg2').show();"  ></p:commandButton>
+			</h:panelGrid>
+	    <p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true" height="200">
+	    		
+	   			 <h:panelGrid cellpadding="5" columns="2" style="padding-top:10px;">
+		       	<p:fileUpload value="#{fileUploadModel1.file}" mode="simple" label="Select Picture.."  skinSimple="true" />
+		       	<p:spacer></p:spacer>
+			    <p:inputText value="#{fileUploadModel1.tags}" label="tags"  />
+			    <p:commandButton value="Submit" ajax="false" actionListener="#{fileUploadModel1.upload()}" />
+			    </h:panelGrid>
+		</p:dialog>  
+		
+	</h:form>
+  </h:body>
+</html>
